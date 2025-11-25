@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Hub • Menu</title>
+
+    <!-- Fonts & Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Satoshi:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --green: #166534;
+            --gold: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --cream: #fffaf0;
+        }
+
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background: #fff;
+            color: var(--dark);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 1100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(2, 6, 23, 0.04);
+            width: 100%;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            transition: padding 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        header.scrolled .header-inner {
+            padding: 0.6rem 5%;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+        }
+
+        .logo svg {
+            width: 44px;
+            height: 44px;
+        }
+
+        .logo .brand-name {
+            color: var(--green);
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Nav */
+        nav {
+            display: none;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.6rem;
+            align-items: center;
+        }
+
+        .nav-list a {
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
+            padding: 6px 0;
+        }
+
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--green));
+            transition: width .32s ease;
+            border-radius: 8px;
+        }
+
+        .nav-list a:hover::after,
+        .nav-list a:focus::after {
+            width: 100%;
+        }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .btn-cta.primary {
+            background: linear-gradient(90deg, var(--gold), #f4b23f);
+            color: #000;
+        }
+
+        .btn-cta.secondary {
+            background: transparent;
+            border: 1px solid rgba(2, 6, 23, 0.06);
+            color: var(--dark);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            background: transparent;
+            border: 0;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hamburger .bars {
+            width: 20px;
+            height: 14px;
+            display: block;
+            position: relative;
+        }
+
+        .hamburger .bars span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 3px;
+        }
+
+        .hamburger .bars span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger .bars span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger .bars span:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Mobile Drawer */
+        #mobile-drawer,
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            max-width: 80%;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 8px 0 0 8px;
+            z-index: 1200;
+            display: flex;
+            flex-direction: column;
+            padding: 2.8rem 1.8rem;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            gap: 15px;
+        }
+
+        #mobile-drawer.active,
+        .mobile-drawer.active {
+            transform: translateX(0);
+        }
+
+        .drawer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 1.2rem;
+        }
+
+        .drawer-links a {
+            padding: 12px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        #drawer-close {
+            align-self: flex-end;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Overlay */
+        #mobile-overlay,
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1190;
+            opacity: 0;
+            pointer-events: none;
+            backdrop-filter: blur(3px);
+            transition: opacity 0.3s ease;
+        }
+
+        #mobile-overlay.active,
+        .mobile-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: linear-gradient(180deg, #071427 0%, #081827 100%);
+            color: #e6eef6;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .footer-inner {
+            padding: 2.8rem 5% 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.6rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(230, 238, 246, 0.95);
+            font-weight: 600;
+        }
+
+        .social {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .legal-row {
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        /* Menu Page */
+        section {
+            padding: 120px 5% 60px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .section-title span {
+            color: var(--gold);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filters button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: var(--gold);
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .filters button.active {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .price {
+            color: var(--gold);
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .add-cart {
+            background: var(--green);
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Cart Panel */
+        .cart-panel {
+            margin-top: 2rem;
+            border-radius: 14px;
+            border: 1px solid rgba(2, 6, 23, 0.06);
+            background: linear-gradient(180deg, #fff, #fbfdff);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+            padding: 18px;
+            display: none;
+        }
+
+        .cart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow: auto;
+            padding-right: 6px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(2, 6, 23, 0.03);
+            background: #fff;
+        }
+
+        .cart-item .title {
+            font-weight: 700;
+            color: var(--dark);
+            flex: 1;
+        }
+
+        .qty-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(2, 6, 23, 0.03);
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .qty-controls button {
+            border: 0;
+            background: transparent;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cart-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .cart-empty {
+            padding: 18px;
+            text-align: center;
+            color: #475569;
+        }
+
+        .order-btn {
+            background: linear-gradient(90deg, var(--gold), #f4b23f);
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: #000;
+            font-weight: 800;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background: transparent;
+            border: 0;
+            color: #ef4444;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            z-index: 999;
+        }
+
+        /* Responsive Breakpoints */
+        @media (min-width: 768px) {
+            nav {
+                display: block;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            #mobile-drawer,
+            .mobile-drawer,
+            #mobile-overlay,
+            .mobile-overlay {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .menu-item img {
+                height: 150px;
+            }
+
+            .filters button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .cart-panel {
+                padding: 14px;
+            }
+
+            .order-btn {
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .menu-grid {
+                gap: 1rem;
+            }
+
+            .menu-item img {
+                height: 120px;
+            }
+
+            .filters button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+
+
+    <!-- GSAP for header/drawer animations (optional but keeps behavior consistent) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="../index.html" class="logo" aria-label="UP25 - Home">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="g1m" x1="0" x2="1">
+                            <stop offset="0" stop-color="#f59e0b" />
+                            <stop offset="1" stop-color="#10b981" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="44" fill="#0f172a" opacity="0.08" />
+                    <path d="M28 72c10-12 22-18 40-18 0 0-22 34-40 18z" fill="url(#g1m)" />
+                </svg>
+                <div>
+                    <span class="brand-name">Food<span style="color:var(--gold)">Hub</span></span>
+                    <small class="brand-sub">Premium Veg • Meerganj</small>
+                </div>
+            </a>
+
+            <nav aria-label="Primary Navigation">
+                <div class="nav-list">
+                    <a href="../index.html#home">Home</a>
+                    <a href="../index.html#gallery">Gallery</a>
+                    <a href="../index.html#menu">Menu</a>
+                    <a href="../index.html#reviews">Reviews</a>
+                    <a href="../index.html#specials">Specials</a>
+                </div>
+            </nav>
+
+            <div class="cta-group">
+                <a class="btn-cta secondary" href="tel:+919876543210">+91 8126662400</a>
+
+                <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobile-drawer"
+                    aria-label="Open menu">
+                    <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-overlay" id="mobile-overlay" tabindex="-1" aria-hidden="true"></div>
+    <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" role="dialog" aria-label="Mobile menu">
+        <button class="close-btn" id="drawer-close" aria-label="Close menu">✕</button>
+        <div style="margin-top:6px; font-weight:800; font-size:1.05rem; color:var(--green);">UP25 — Menu</div>
+        <nav class="drawer-links" aria-label="Mobile Navigation">
+            <a href="../index.html#home">Home</a>
+            <a href="../index.html#gallery">Gallery</a>
+            <a href="../index.html#menu">Menu</a>
+            <a href="../index.html#reviews">Reviews</a>
+            <a href="../index.html#specials">Specials</a>
+        </nav>
+    </aside>
+
+    <!-- Menu Section -->
+    <section>
+        <h2 class="section-title">Our <span>Menu</span></h2>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="pizza">Pizza</button>
+            <button class="filter-btn" data-category="main">Main Course</button>
+            <button class="filter-btn" data-category="snacks">Snacks</button>
+            <button class="filter-btn" data-category="drinks">Drinks</button>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menuGrid">
+            <!-- Pizza -->
+            <div class="menu-item" data-category="pizza">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800" alt="Margherita">
+                <div class="item-info">
+                    <h3>Margherita Pizza</h3>
+                    <p class="price">₹229</p>
+                    <button class="add-cart" data-name="Margherita Pizza" data-price="229">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/a1.jpg" alt="Veggie Pizza">
+                <div class="item-info">
+                    <h3>Veggie Pizza</h3>
+                    <p class="price">₹279</p>
+                    <button class="add-cart" data-name="Veggie Pizza" data-price="279">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Main Course -->
+            <div class="menu-item" data-category="main">
+                <img src="../images/a2.jpg" alt="Paneer Butter Masala">
+                <div class="item-info">
+                    <h3>Paneer Butter Masala</h3>
+                    <p class="price">₹249</p>
+                    <button class="add-cart" data-name="Paneer Butter Masala" data-price="249">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="../images/a3.jpg" alt="Hakka Noodles">
+                <div class="item-info">
+                    <h3>Hakka Noodles</h3>
+                    <p class="price">₹169</p>
+                    <button class="add-cart" data-name="Hakka Noodles" data-price="169">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Snacks -->
+            <div class="menu-item" data-category="snacks">
+                <img src="../images/a4.jpg" alt="French Fries">
+                <div class="item-info">
+                    <h3>French Fries</h3>
+                    <p class="price">₹99</p>
+                    <button class="add-cart" data-name="French Fries" data-price="99">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Drinks -->
+            <div class="menu-item" data-category="drinks">
+                <img src="../images/a5.jpg" alt="Lemonade">
+                <div class="item-info">
+                    <h3>Lemonade</h3>
+                    <p class="price">₹49</p>
+                    <button class="add-cart" data-name="Lemonade" data-price="49">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- ADDED ITEMS START (20+) -->
+            <!-- Pizza additions -->
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/pizza-img.jpg" alt="Farmhouse Pizza">
+                <div class="item-info">
+                    <h3>Farmhouse Pizza</h3>
+                    <p class="price">₹329</p><button class="add-cart" data-name="Farmhouse Pizza" data-price="329">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/a6.jpg" alt="Paneer Peri Pizza">
+                <div class="item-info">
+                    <h3>Paneer Peri Pizza</h3>
+                    <p class="price">₹349</p><button class="add-cart" data-name="Paneer Peri Pizza" data-price="349">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/a7.jpg" alt="Truffle Mushroom Pizza">
+                <div class="item-info">
+                    <h3>Truffle Mushroom Pizza</h3>
+                    <p class="price">₹429</p><button class="add-cart" data-name="Truffle Mushroom Pizza"
+                        data-price="429">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800" alt="Four Cheese Pizza">
+                <div class="item-info">
+                    <h3>Four Cheese Pizza</h3>
+                    <p class="price">₹399</p><button class="add-cart" data-name="Four Cheese Pizza" data-price="399">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/a8.jpg" alt="BBQ Paneer Pizza">
+                <div class="item-info">
+                    <h3>BBQ Paneer Pizza</h3>
+                    <p class="price">₹339</p><button class="add-cart" data-name="BBQ Paneer Pizza" data-price="339">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="pizza">
+                <img src="../images/noodles-img.jpg" alt="Spicy Veg Supreme">
+                <div class="item-info">
+                    <h3>Spicy Veg Supreme</h3>
+                    <p class="price">₹369</p><button class="add-cart" data-name="Spicy Veg Supreme" data-price="369">Add
+                        to Cart</button>
+                </div>
+            </div>
+
+            <!-- Main additions -->
+            <div class="menu-item" data-category="main">
+                <img src="../images/a9.jpg" alt="Veg Biryani">
+                <div class="item-info">
+                    <h3>Veg Biryani</h3>
+                    <p class="price">₹229</p><button class="add-cart" data-name="Veg Biryani" data-price="229">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="../images/thali-img.jpg" alt="Chole Bhature">
+                <div class="item-info">
+                    <h3>Chole Bhature</h3>
+                    <p class="price">₹199</p><button class="add-cart" data-name="Chole Bhature" data-price="199">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="../images/pexels-janetrangdoan-1099680.jpg" alt="Dal Makhani">
+                <div class="item-info">
+                    <h3>Dal Makhani</h3>
+                    <p class="price">₹189</p><button class="add-cart" data-name="Dal Makhani" data-price="189">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="../images/a1.jpg" alt="Malai Kofta">
+                <div class="item-info">
+                    <h3>Malai Kofta</h3>
+                    <p class="price">₹259</p><button class="add-cart" data-name="Malai Kofta" data-price="259">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="../images/pizza-img.jpg" alt="Mixed Veg Curry">
+                <div class="item-info">
+                    <h3>Mixed Veg Curry</h3>
+                    <p class="price">₹179</p><button class="add-cart" data-name="Mixed Veg Curry" data-price="179">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="main">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800" alt="Tandoori Roti Set">
+                <div class="item-info">
+                    <h3>Tandoori Roti Set</h3>
+                    <p class="price">₹129</p><button class="add-cart" data-name="Tandoori Roti Set" data-price="129">Add
+                        to Cart</button>
+                </div>
+            </div>
+
+            <!-- Snacks additions -->
+            <div class="menu-item" data-category="snacks">
+                <img src="../images/a1.jpg" alt="Paneer Tikka">
+                <div class="item-info">
+                    <h3>Paneer Tikka</h3>
+                    <p class="price">₹199</p><button class="add-cart" data-name="Paneer Tikka" data-price="199">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="snacks">
+                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800" alt="Veg Spring Rolls">
+                <div class="item-info">
+                    <h3>Veg Spring Rolls</h3>
+                    <p class="price">₹139</p><button class="add-cart" data-name="Veg Spring Rolls" data-price="139">Add
+                        to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="snacks">
+                <img src="../images/a2.jpg" alt="Samosa Chaat">
+                <div class="item-info">
+                    <h3>Samosa Chaat</h3>
+                    <p class="price">₹119</p><button class="add-cart" data-name="Samosa Chaat" data-price="119">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="snacks">
+                <img src="../images/a4.jpg" alt="Corn Chaat">
+                <div class="item-info">
+                    <h3>Corn Chaat</h3>
+                    <p class="price">₹99</p><button class="add-cart" data-name="Corn Chaat" data-price="99">Add to
+                        Cart</button>
+                </div>
+            </div>
+
+            <!-- Drinks additions -->
+            <div class="menu-item" data-category="drinks">
+                <img src="../images/a5.jpg" alt="Masala Chai">
+                <div class="item-info">
+                    <h3>Masala Chai</h3>
+                    <p class="price">₹39</p><button class="add-cart" data-name="Masala Chai" data-price="39">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="drinks">
+                <img src="../images/a6.jpg" alt="Lassi">
+                <div class="item-info">
+                    <h3>Lassi</h3>
+                    <p class="price">₹79</p><button class="add-cart" data-name="Lassi" data-price="79">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="drinks">
+                <img src="../images/a7.jpg" alt="Cold Coffee">
+                <div class="item-info">
+                    <h3>Cold Coffee</h3>
+                    <p class="price">₹89</p><button class="add-cart" data-name="Cold Coffee" data-price="89">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-category="drinks">
+                <img src="../images/a9.jpg" alt="Fresh Lime Soda">
+                <div class="item-info">
+                    <h3>Fresh Lime Soda</h3>
+                    <p class="price">₹59</p><button class="add-cart" data-name="Fresh Lime Soda" data-price="59">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <!-- ADDED ITEMS END -->
+        </div>
+
+        <!-- Cart Panel (visible when items are added) -->
+        <div class="cart-panel" id="cartPanel" aria-live="polite">
+            <div class="cart-header">
+                <div style="display:flex;align-items:center;gap:10px"><strong>Your Cart</strong><span id="cartCount"
+                        style="color:#64748b;font-weight:700">(0)</span></div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <button id="clearCart" class="remove-btn" aria-label="Clear cart">Clear</button>
+                    <button id="orderNow" class="order-btn">Order Now • WhatsApp</button>
+                </div>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <div class="cart-empty" id="cartEmpty">No items yet — add some delicious dishes.</div>
+            </div>
+            <div class="cart-summary" id="cartFooter" style="display:none">
+                <div style="font-weight:700">Total</div>
+                <div id="cartTotal" style="font-weight:900;color:var(--gold)">₹0</div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:2rem;">
+            <button id="sendCart"></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="../index.html#home" class="footer-logo" aria-label="UP25 - Home">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="g2m" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#f59e0b" />
+                                    <stop offset="1" stop-color="#10b981" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="50" cy="50" r="44" fill="#0f172a" opacity="0.06" />
+                            <path d="M28 72c10-12 22-18 40-18 0 0-22 34-40 18z" fill="url(#g2m)" />
+                        </svg>
+                        <div>
+                            <strong
+                                style="display:block; color:#e6eef6; font-family:'Playfair Display', serif; font-size:1.05rem;">Food<span
+                                    style="color:var(--gold)">Hub</span></strong>
+                            <small style="color:rgba(230,238,246,0.8);display:block">Pure Veg Restaurant •
+                                Meerganj</small>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Fresh, premium vegetarian dining with handcrafted pizzas, authentic Indian
+                        classics and lively Indo-Chinese — delivered with care.</p>
+                    <div class="footer-contacts">
+                        <a class="phone-pill" href="tel:+919876543210" aria-label="Call UP25">📞 +91 8126662400</a>
+                        <a href="https://wa.me/919876543210" class="phone-pill chat-pill"
+                            aria-label="Chat on WhatsApp">Chat</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#home">Home</a></li>
+                        <li><a href="../index.html#gallery">Gallery</a></li>
+                        <li><a href="../index.html#menu">Menu</a></li>
+                        <li><a href="../index.html#reviews">Reviews</a></li>
+                        <li><a href="../index.html#specials">Specials</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal & Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Stay in touch</h4>
+                    <p style="color:rgba(230,238,246,0.86)">Sign up for updates and special offers from UP25.</p>
+                    <form id="newsletterForm" class="newsletter-form" aria-label="Subscribe to newsletter">
+                        <input id="newsletterEmail" class="newsletter-input" type="email" placeholder="Your email"
+                            aria-label="Email for newsletter" required />
+                        <button class="btn-cta primary newsletter-btn" type="submit">Subscribe</button>
+                    </form>
+                    <div style="display:flex; gap:8px; margin-top:1rem; align-items:center;">
+                        <a class="social" href="#" aria-label="instagram"><i class="fab fa-instagram"
+                                style="font-size:1.2rem;color:#f97316"></i></a>
+                        <a class="social" href="#" aria-label="facebook"><i class="fab fa-facebook"
+                                style="font-size:1.2rem;color:#2563eb"></i></a>
+                        <a class="social" href="#" aria-label="twitter"><i class="fab fa-twitter"
+                                style="font-size:1.2rem;color:#06b6d4"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-row">
+                <div class="copyright">© <span id="year">2025</span> UP25. All rights reserved.</div>
+                <div class="legal-links">
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Header + Drawer animation (gsap optional)
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const siteHeader = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            siteHeader.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const drawer = document.getElementById('mobile-drawer');
+        const overlay = document.getElementById('mobile-overlay');
+        const closeBtn = document.getElementById('drawer-close');
+
+        let isOpen = false; // track drawer state
+
+        function openDrawer() {
+            overlay.style.pointerEvents = "auto";
+            gsap.to(drawer, { x: "0%", duration: 0.5, ease: "power3.out" });
+            gsap.to(overlay, { opacity: 1, duration: 0.5 });
+            hamburger.setAttribute('aria-expanded', 'true');
+            drawer.setAttribute('aria-hidden', 'false');
+            isOpen = true;
+        }
+
+        function closeDrawer() {
+            overlay.style.pointerEvents = "none";
+            gsap.to(drawer, { x: "100%", duration: 0.5, ease: "power3.in" });
+            gsap.to(overlay, { opacity: 0, duration: 0.5 });
+            hamburger.setAttribute('aria-expanded', 'false');
+            drawer.setAttribute('aria-hidden', 'true');
+            isOpen = false;
+        }
+
+        // Toggle drawer when hamburger is clicked
+        hamburger.addEventListener('click', () => {
+            if (isOpen) {
+                closeDrawer();
+            } else {
+                openDrawer();
+            }
+        });
+
+        // Close drawer when overlay or close button is clicked
+        closeBtn.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+
+
+
+        // Filter menu items
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const category = btn.dataset.category;
+                menuItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Cart functionality — structured cart object with quantity + UI
+        const cart = []; // {name, price, qty}
+        const addCartBtns = document.querySelectorAll('.add-cart');
+
+        const cartPanel = document.getElementById('cartPanel');
+        const cartCount = document.getElementById('cartCount');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartEmpty = document.getElementById('cartEmpty');
+        const cartFooter = document.getElementById('cartFooter');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const orderNow = document.getElementById('orderNow');
+        const clearCartBtn = document.getElementById('clearCart');
+
+        function formatCurrency(n) { return '₹' + Number(n).toFixed(0); }
+
+        function renderCart() {
+            // show or hide
+            if (cart.length === 0) {
+                cartPanel.style.display = 'none';
+                cartEmpty.style.display = 'block';
+                cartFooter.style.display = 'none';
+                cartCount.textContent = '(0)';
+                return;
+            }
+            cartPanel.style.display = 'block';
+            cartEmpty.style.display = 'none';
+            cartFooter.style.display = 'flex';
+            cartCount.textContent = `(${cart.reduce((s, i) => s + i.qty, 0)})`;
+
+            // render items
+            cartItemsEl.innerHTML = '';
+            cart.forEach((it, idx) => {
+                const row = document.createElement('div');
+                row.className = 'cart-item';
+                row.setAttribute('data-name', it.name);
+                row.innerHTML = `
+          <div class="title">${it.name}</div>
+          <div style="text-align:right;min-width:120px">
+            <div style="font-weight:700">${formatCurrency(it.price * it.qty)}</div>
+            <div style="margin-top:6px;display:flex;align-items:center;justify-content:flex-end;gap:8px">
+              <div class="qty-controls" role="group" aria-label="Quantity controls for ${it.name}">
+                <button class="qty-minus" data-index="${idx}" aria-label="Decrease">−</button>
+                <div style="min-width:22px;text-align:center;font-weight:700">${it.qty}</div>
+                <button class="qty-plus" data-index="${idx}" aria-label="Increase">+</button>
+              </div>
+              <button class="remove-btn" data-index="${idx}" aria-label="Remove ${it.name}">Remove</button>
+            </div>
+          </div>`;
+                cartItemsEl.appendChild(row);
+            });
+
+            const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            cartTotalEl.textContent = formatCurrency(total);
+
+            // wire qty controls
+            cartItemsEl.querySelectorAll('.qty-plus').forEach(b => b.addEventListener('click', (e) => {
+                const i = Number(b.dataset.index); cart[i].qty++; renderCart();
+            }));
+            cartItemsEl.querySelectorAll('.qty-minus').forEach(b => b.addEventListener('click', (e) => {
+                const i = Number(b.dataset.index); if (cart[i].qty > 1) { cart[i].qty--; } else { cart.splice(i, 1); } renderCart();
+            }));
+            cartItemsEl.querySelectorAll('.remove-btn').forEach(b => b.addEventListener('click', () => {
+                const i = Number(b.dataset.index); cart.splice(i, 1); renderCart();
+            }));
+        }
+
+        addCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = Number(btn.dataset.price || 0);
+                // if present add qty
+                const existing = cart.find(it => it.name === name);
+                if (existing) { existing.qty++; }
+                else { cart.push({ name, price, qty: 1 }); }
+                renderCart();
+                // subtle micro-feedback: brief highlight on the cart panel
+                cartPanel.animate([{ boxShadow: '0 0 0 rgba(0,0,0,0)' }, { boxShadow: '0 20px 60px rgba(16,185,129,0.08)' }, { boxShadow: '0 0 0 rgba(0,0,0,0)' }], { duration: 700 });
+            });
+        });
+
+        // Clear cart
+        clearCartBtn?.addEventListener('click', () => { cart.splice(0, cart.length); renderCart(); });
+
+        // Send cart to WhatsApp (Order Now) — uses cart contents and quantities
+        function buildOrderMessage() {
+            if (cart.length === 0) return '';
+            let total = 0;
+            let msg = 'Hello UP25! I would like to place an order:%0A';
+            cart.forEach((item) => { msg += `${item.name} x ${item.qty} — ₹${item.price * item.qty}%0A`; total += item.price * item.qty; });
+            msg += `%0ATotal: ₹${total}%0A%0AThanks!`;
+            return msg;
+        }
+
+        document.getElementById('sendCart').addEventListener('click', () => {
+            if (cart.length === 0) { alert('Cart is empty! Add some dishes first.'); return; }
+            const url = `https://wa.me/919876543210?text=${buildOrderMessage()}`;
+            window.open(url, '_blank');
+        });
+
+        orderNow?.addEventListener('click', () => {
+            if (cart.length === 0) { alert('Cart is empty! Add some dishes first.'); return; }
+            window.open(`https://wa.me/919876543210?text=${buildOrderMessage()}`, '_blank');
+        });
+        // Footer helpers: set year and newsletter
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        const nlForm = document.getElementById('newsletterForm');
+        if (nlForm) {
+            nlForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail');
+                if (!email || !email.value || !email.checkValidity()) {
+                    email?.focus();
+                    email?.reportValidity();
+                    return;
+                }
+                const submitBtn = nlForm.querySelector('button[type=submit]');
+                const orig = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Sending…';
+                submitBtn.disabled = true;
+                setTimeout(() => {
+                    submitBtn.innerHTML = 'Subscribed ✓';
+                    submitBtn.style.background = 'linear-gradient(90deg,#6ee7b7,#f59e0b)';
+                    email.value = '';
+                    setTimeout(() => { submitBtn.innerHTML = orig; submitBtn.disabled = false; submitBtn.style.background = ''; }, 2400);
+                }, 900);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

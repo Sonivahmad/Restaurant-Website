@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Hub • Premium Veg Restaurant & Pizza Cafe | Meerganj</title>
+    <meta name="description"
+        content="Best Pure Veg Pizza, Indian & Chinese in Meerganj | Fast Delivery | Premium Experience" />
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Satoshi:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+    <!-- GSAP + Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <style>
+        :root {
+            --green: #166534;
+            --emerald: #10b981;
+            --gold: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --cream: #fffaf0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: none;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background: white;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Mobile First & Fully Responsive */
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Header - modern responsive animated */
+        header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            /* top, right, bottom, left */
+            z-index: 1100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            transition: padding 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        header.scrolled .header-inner {
+            padding: 0.6rem 5%;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+        }
+
+        /* logo */
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+        }
+
+        .logo .brand-name {
+            color: var(--green);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+        }
+
+        .logo .brand-sub {
+            font-size: 0.78rem;
+            color: #475569;
+            display: block;
+            line-height: 1;
+        }
+
+        /* Desktop navigation */
+        nav {
+            display: none;
+        }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+        }
+
+        .nav-list a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            padding: 6px 0;
+        }
+
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--emerald));
+            transition: width .32s ease;
+            border-radius: 8px;
+        }
+
+        .nav-list a:hover::after,
+        .nav-list a:focus::after {
+            width: 100%;
+        }
+
+        /* CTA group */
+        .cta-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        .btn-cta.primary {
+            background: linear-gradient(90deg, var(--gold), #f4b23f);
+            color: #000;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
+        }
+
+        .btn-cta.secondary {
+            background: transparent;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            color: var(--dark);
+        }
+
+        .btn-cta.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(245, 158, 11, 0.18);
+        }
+
+        /* Mobile hamburger */
+        .hamburger {
+            background: transparent;
+            border: 0;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hamburger .bars {
+            width: 20px;
+            height: 14px;
+            display: block;
+            position: relative;
+        }
+
+        .hamburger .bars span {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 3px;
+            transform-origin: center;
+        }
+
+        .hamburger .bars span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger .bars span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger .bars span:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Mobile drawer */
+        .mobile-drawer {
+            position: fixed;
+            inset: 0 0 0 auto;
+            width: 320px;
+            max-width: 100%;
+            right: -400px;
+            top: 0;
+            height: 100vh;
+            background: white;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.12);
+            z-index: 1200;
+            padding: 2.8rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transform: translateX(0);
+        }
+
+        .mobile-drawer .close-btn {
+            margin-left: auto;
+            background: transparent;
+            border: 0;
+            font-size: 1.2rem;
+        }
+
+        .drawer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 1.2rem;
+        }
+
+        .drawer-links a {
+            padding: 12px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.3);
+            z-index: 1190;
+            display: none;
+        }
+
+        #mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            transform: translateX(100%);
+            /* start offscreen */
+            display: flex;
+            flex-direction: column;
+        }
+
+        #mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            /* hidden */
+            pointer-events: none;
+            /* prevent blocking clicks when hidden */
+        }
+
+        /* Overlay */
+        #mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* dark transparent overlay */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+            backdrop-filter: blur(3px);
+            /* subtle blur behind drawer */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Drawer */
+        #mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            /* professional width */
+            max-width: 80%;
+            /* responsive on smaller screens */
+            height: 100vh;
+            background: #fff;
+            /* white background */
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            /* subtle shadow */
+            border-radius: 8px 0 0 8px;
+            /* rounded left side */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            transform: translateX(100%);
+            /* start offscreen */
+            overflow-y: auto;
+            /* scroll if content is long */
+            gap: 15px;
+            /* spacing between items */
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Close Button */
+        #drawer-close {
+            align-self: flex-end;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Menu Items */
+        #mobile-drawer a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            padding: 10px 0;
+            transition: color 0.2s;
+        }
+
+        #mobile-drawer a:hover {
+            color: #007bff;
+            /* accent color on hover */
+        }
+
+
+        /* small helpers */
+        .phone-pill {
+            display: inline-flex;
+            gap: .5rem;
+            align-items: center;
+            background: linear-gradient(90deg, #06b6d4, #10b981);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.86rem;
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.18);
+        }
+
+        @media (min-width: 768px) {
+            nav {
+                display: block;
+            }
+
+            .nav-list {
+                gap: 2.2rem;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            .mobile-drawer,
+            .mobile-overlay {
+                display: none;
+            }
+
+            .cta-group .btn-cta.secondary {
+                display: none;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=1920') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        /* Keep anchor targets visible when header is fixed */
+        section,
+        .hero {
+            scroll-margin-top: 96px;
+        }
+
+        /* Focus ring for keyboard users */
+        a:focus,
+        button:focus {
+            outline: 3px solid rgba(16, 185, 129, 0.18);
+            outline-offset: 4px;
+            border-radius: 6px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            background: var(--gold);
+            color: #000;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.4s;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+            z-index: 999;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7)
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0)
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0)
+            }
+        }
+
+        /* Section */
+        section {
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--dark);
+        }
+
+        .section-title span {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Parallax Sticky Gallery */
+        .gallery {
+            height: 300vh;
+            position: relative;
+            background: var(--cream);
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .gallery-images {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-img {
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-img {
+                width: 220px;
+                height: 320px;
+            }
+        }
+
+        /* Food Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cat-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+        }
+
+        .cat-card:hover {
+            transform: translateY(-15px);
+        }
+
+        .cat-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .cat-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        /* Menu Preview */
+        .menu-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .menu-item-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 1.5rem;
+        }
+
+        .price {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Testimonials carousel */
+        .testimonials {
+            background: linear-gradient(180deg, #071427 0%, #081827 100%);
+            color: #e6eef6;
+            padding: 6rem 5%;
+        }
+
+        .testimonials .section-title {
+            color: #fff;
+            margin-bottom: 2rem;
+            font-size: 2.6rem;
+        }
+
+        .t-carousel {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .t-track {
+            overflow: hidden;
+            border-radius: 18px;
+        }
+
+        .t-slides {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            will-change: transform;
+        }
+
+        .t-slide {
+            min-width: 320px;
+            max-width: 720px;
+            flex: 0 0 70%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+            padding: 2rem;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(2, 6, 23, 0.4);
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .t-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 999px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .t-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .t-content {
+            flex: 1;
+        }
+
+        .t-quote {
+            font-size: 1.05rem;
+            color: rgba(230, 238, 246, 0.95);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+
+        .t-meta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            color: rgba(230, 238, 246, 0.7);
+            font-weight: 700;
+        }
+
+        .t-star {
+            color: #f59e0b;
+            margin-right: 8px;
+        }
+
+        .t-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 14px
+        }
+
+        .t-arrows {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .t-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: #e6eef6;
+            border: 0;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700
+        }
+
+        .t-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px
+        }
+
+        .t-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            cursor: pointer;
+        }
+
+        .t-dot.active {
+            background: linear-gradient(90deg, var(--gold), var(--emerald));
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.08);
+        }
+
+        @media(min-width:1200px) {
+            .t-slide {
+                flex: 0 0 48%;
+            }
+
+            .t-track {
+                padding: 8px
+            }
+        }
+
+        @media(max-width:767px) {
+            .t-slide {
+                min-width: 86%;
+                flex: 0 0 86%;
+                padding: 1.4rem
+            }
+
+            .testimonials {
+                padding: 4rem 4%
+            }
+        }
+
+        /* Footer - professional, dark, responsive */
+        .site-footer {
+            background: linear-gradient(180deg, #071427 0%, #081827 100%);
+            color: #e6eef6;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .footer-inner {
+            padding: 3.6rem 5% 2.8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr 0.9fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 0.8rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .footer-about .footer-logo {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .footer-about .footer-logo svg {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+
+        .footer-desc {
+            margin-top: 0.9rem;
+            color: rgba(230, 238, 246, 0.85);
+            max-width: 420px;
+        }
+
+        .footer-contacts {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .phone-pill {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            color: #0b1722;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .92rem;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
+        }
+
+        .phone-pill:hover {
+            transform: translateY(-3px);
+            transition: transform .18s ease;
+        }
+
+        .chat-pill {
+            background: linear-gradient(90deg, #06b6d4, #10b981);
+            color: #05111a;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(230, 238, 246, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 0;
+            border-radius: 6px;
+        }
+
+        .footer-links a:hover {
+            color: var(--emerald);
+            transform: translateX(6px);
+            transition: all .18s ease;
+        }
+
+        .social {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.92);
+            transition: transform .15s ease, background .12s ease;
+        }
+
+        .social:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .legal-row a {
+            color: rgba(230, 238, 246, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .legal-row {
+            margin-top: 2.4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legal-row .copyright {
+            color: rgba(230, 238, 246, 0.8);
+            font-weight: 600;
+        }
+
+        .legal-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .legal-links a {
+            color: rgba(230, 238, 246, 0.85);
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #e6eef6;
+            transition: box-shadow .15s ease, transform .12s ease;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(230, 238, 246, 0.6);
+        }
+
+        .newsletter-input:focus {
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        @media(min-width:768px) {
+            .footer-grid {
+                grid-template-columns: 1.3fr 0.9fr 0.9fr 1fr;
+            }
+        }
+
+        @media(max-width:767px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.4rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+            }
+
+            .legal-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="index.html" class="logo" aria-label="UP25 - Home">
+                <!-- small brand mark svg -->
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="g1" x1="0" x2="1">
+                            <stop offset="0" stop-color="#f59e0b" />
+                            <stop offset="1" stop-color="#10b981" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="44" fill="#0f172a" opacity="0.08" />
+                    <path d="M28 72c10-12 22-18 40-18 0 0-22 34-40 18z" fill="url(#g1)" />
+                </svg>
+                <div>
+                    <span class="brand-name">Food<span style="color:var(--gold)">Hub</span></span>
+                    <small class="brand-sub">Premium Veg • Meerganj</small>
+                </div>
+            </a>
+
+            <nav aria-label="Primary Navigation">
+                <div class="nav-list">
+                    <a href="#home">Home</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="./components/menu.html">Menu</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#specials">Specials</a>
+                </div>
+            </nav>
+
+            <div class="cta-group">
+
+
+
+                <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobile-drawer"
+                    aria-label="Open menu">
+                    <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-overlay" id="mobile-overlay" tabindex="-1" aria-hidden="true"></div>
+    <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" role="dialog" aria-label="Mobile menu">
+        <button class="close-btn" id="drawer-close" aria-label="Close menu">✕</button>
+        <div style="margin-top:6px; font-weight:800; font-size:1.05rem; color:var(--green);">UP25 — Menu</div>
+        <nav class="drawer-links" aria-label="Mobile Navigation">
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="./components/menu.html">Menu</a>
+            <a href="#specials">Specials</a>
+            <a href="#reviews">Reviews</a>
+        </nav>
+    </aside>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div>
+            <h1>Foodhub</h1>
+            <p class="tagline">Pure Vegetarian • Premium Dining Experience</p>
+            <p>Meerganj, 243504 • Best Pizza, Indian & Chinese in Town</p>
+            <a href="#menu" class="btn">Order Now</a>
+            <a href="tel:+919876543210" class="btn"
+                style="background:transparent;border:2px solid white;color:white;">Call Now</a>
+        </div>
+    </section>
+
+    <!-- Sticky Parallax Food Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="sticky-container">
+            <div class="gallery-images">
+                <img class="gallery-img" src="./images/a1.jpg"
+                    alt="Pizza">
+                <img class="gallery-img" src="./images/a2.jpg"
+                    alt="Indian Food">
+                <img class="gallery-img" src="./images/a3.jpg"
+                    alt="Chinese">
+                <img class="gallery-img" src="./images/a6.jpg"
+                    alt="Restaurant">
+                <img class="gallery-img" src="./images/a5.jpg"
+                    alt="Dining">
+                <img class="gallery-img" src="./images/a7.jpg"
+                    alt="Paneer">
+                <img class="gallery-img" src="./images/pexels-janetrangdoan-1099680.jpg"
+                    alt="Dessert">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
+                    alt="Pizza Closeup">
+                  
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Categories -->
+    <section id="specials">
+        <h2 class="section-title">Our <span>Specialties</span></h2>
+        <div class="categories">
+            <div class="cat-card">
+                <img src="./images/pizza-img.jpg" alt="Pizza">
+                <div class="cat-content">
+                    <h3>Handcrafted Pizzas</h3>
+                    <p>Fresh dough, premium cheese, garden toppings</p>
+                </div>
+            </div>
+            <div class="cat-card">
+                <img src="./images/thali-img.jpg" alt=Indian">
+                <div class="cat-content">
+                    <h3>Authentic Indian</h3>
+                    <p>Rich gravies, aromatic spices</p>
+                </div>
+            </div>
+            <div class="cat-card">
+                <img src="./images/noodles-img.jpg" alt="Chinese">
+                <div class="cat-content">
+                    <h3>Indo-Chinese</h3>
+                    <p>Bold flavors, perfect crunch</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section id="menu">
+        <h2 class="section-title">Popular <span>Dishes</span></h2>
+        <div class="menu-preview">
+            <div class="menu-item-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800" alt="Margherita">
+                <div class="item-info">
+                    <h3>Margherita Pizza</h3>
+                    <p class="price">₹229</p>
+                </div>
+            </div>
+            <div class="menu-item-card">
+                <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800" alt="Paneer">
+                <div class="item-info">
+                    <h3>Paneer Butter Masala</h3>
+                    <p class="price">₹249</p>
+                </div>
+            </div>
+            <div class="menu-item-card">
+                <img src="https://images.unsplash.com/photo-1621996346565-e3dbc44ae37d?w=800" alt="Noodles">
+                <div class="item-info">
+                    <h3>Hakka Noodles</h3>
+                    <p class="price">₹169</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials - modern GSAP carousel -->
+    <section class="testimonials" id="reviews">
+        <h2 class="section-title">What People Say</h2>
+        <div class="t-carousel" aria-roledescription="carousel">
+            <div class="t-track">
+                <div class="t-slides" id="tSlides">
+                    <div class="t-slide" data-index="0" aria-roledescription="slide">
+                        <div class="t-avatar"><img
+                                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=60"
+                                alt="Hashim" /></div>
+                        <div class="t-content">
+                            <div class="t-quote">"Best vegetarian pizza I've ever had! Fresh and delicious — the crust
+                                was perfect and the toppings were vibrant."</div>
+                            <div class="t-meta"><span class="t-star">★★★★★</span>
+                                <div>Hashim Shaikh — Regular Customer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-slide" data-index="1" aria-roledescription="slide">
+                        <div class="t-avatar"><img
+                                src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=400&q=60"
+                                alt="Rohan" /></div>
+                        <div class="t-content">
+                            <div class="t-quote">"Amazing quality and super fast delivery every single time. Packaging
+                                was great and flavours stayed intact."</div>
+                            <div class="t-meta"><span class="t-star">★★★★☆</span>
+                                <div>Rohan Patil — Foodie</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-slide" data-index="2" aria-roledescription="slide">
+                        <div class="t-avatar"><img
+                                src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=400&q=60"
+                                alt="Daljit" /></div>
+                        <div class="t-content">
+                            <div class="t-quote">"My family's favorite place. Never disappoints — consistent flavours
+                                and excellent service."</div>
+                            <div class="t-meta"><span class="t-star">★★★★★</span>
+                                <div>Daljit Singh — Regular</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-slide" data-index="3" aria-roledescription="slide">
+                        <div class="t-avatar"><img
+                                src="https://images.unsplash.com/photo-1545996124-0c5d3b5d3f8f?w=400&q=60" alt="Asha" />
+                        </div>
+                        <div class="t-content">
+                            <div class="t-quote">"Excellent vegetarian options, great ambience — perfect spot for
+                                celebrations and family dinners."</div>
+                            <div class="t-meta"><span class="t-star">★★★★★</span>
+                                <div>Asha Malik — Family Host</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-slide" data-index="4" aria-roledescription="slide">
+                        <div class="t-avatar"><img
+                                src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=400&q=60"
+                                alt="Nitin" /></div>
+                        <div class="t-content">
+                            <div class="t-quote">"The best veg pizza experience in town — creative toppings and friendly
+                                staff. Highly recommended."</div>
+                            <div class="t-meta"><span class="t-star">★★★★☆</span>
+                                <div>Nitin Kapoor — Local</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="t-controls">
+                <div class="t-arrows">
+                    <button class="t-btn" id="tPrev" aria-label="Previous testimonial">◀</button>
+                    <button class="t-btn" id="tNext" aria-label="Next testimonial">▶</button>
+                </div>
+                <div class="t-dots" id="tDots" role="tablist" aria-label="testimonial navigation"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#home" class="footer-logo" aria-label="UP25 - Home">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="g2" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#f59e0b" />
+                                    <stop offset="1" stop-color="#10b981" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="50" cy="50" r="44" fill="#0f172a" opacity="0.06" />
+                            <path d="M28 72c10-12 22-18 40-18 0 0-22 34-40 18z" fill="url(#g2)" />
+                        </svg>
+                        <div>
+                            <strong
+                                style="display:block; color:var(--dark); font-family:'Playfair Display', serif; font-size:1.05rem;">Food<span
+                                    style="color:var(--gold)">Hub</span></strong>
+                            <small style="color:#64748b;display:block">Pure Veg Restaurant & Pizza Cafe •
+                                Meerganj</small>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Fresh, premium vegetarian dining with handcrafted pizzas, authentic Indian
+                        classics and lively Indo-Chinese — delivered with care.</p>
+                    <div class="footer-contacts">
+                        <a class="phone-pill" href="tel:+919876543210" aria-label="Call UP25">📞 +91 8126662400</a>
+                        <a href="https://wa.me/919876543210" class="phone-pill chat-pill"
+                            aria-label="Chat on WhatsApp">Chat</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#specials">Specials</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal & Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="./components/privacy.html">Privacy Policy</a></li>
+                        <li><a href="./components/terms.html">Terms & Conditions</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Stay in touch</h4>
+                    <p style="color:#64748b;">Sign up for updates, special offers and a curated taste of UP25.</p>
+                    <form id="newsletterForm" class="newsletter-form" aria-label="Subscribe to newsletter">
+                        <input id="newsletterEmail" class="newsletter-input" type="email" placeholder="Your email"
+                            aria-label="Email for newsletter" required />
+                        <button class="btn-cta primary newsletter-btn" type="submit">Subscribe</button>
+                    </form>
+                    <div style="display:flex; gap:8px; margin-top:1rem; align-items:center;">
+                        <a class="social" href="#" aria-label="instagram"><i class="fab fa-instagram"
+                                style="font-size:1.2rem;color:#f97316"></i></a>
+                        <a class="social" href="#" aria-label="facebook"><i class="fab fa-facebook"
+                                style="font-size:1.2rem;color:#2563eb"></i></a>
+                        <a class="social" href="#" aria-label="twitter"><i class="fab fa-twitter"
+                                style="font-size:1.2rem;color:#06b6d4"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-row">
+                <div class="copyright">© <span id="year">2025</span> UP25. All rights reserved.</div>
+                <div class="legal-links">
+                    <a href="./components/privacy.html">Privacy</a>
+                    <a href="./components/terms.html">Terms</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // Header scroll effect (smaller / elevated when scrolled)
+        const siteHeader = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            siteHeader.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Page-load header intro animation
+        const headerIntro = gsap.timeline({ defaults: { duration: 0.6, ease: 'power3.out' } });
+        headerIntro.from('.header-inner .logo', { y: -10, opacity: 0 })
+            .from('.nav-list a', { y: -8, opacity: 0, stagger: 0.06 }, '-=0.44')
+            .from('.cta-group .btn-cta', { y: -8, opacity: 0, stagger: 0.06 }, '-=0.4');
+
+        // small logo micro-bounce (looping) for a modern feel
+                gsap.fromTo('.logo svg', { y: 0, scale: 0.98 }, { y: -3, scale: 1, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.6 });
+
+                // If user clicks logo while already on the index page, force a refresh to reload content.
+                (function(){
+                    const logoEl = document.querySelector('.logo');
+                    if(!logoEl) return;
+                    logoEl.addEventListener('click', (e) => {
+                        // If the current page is index or root, reload instead of just doing nothing
+                        const path = window.location.pathname || '';
+                        const isIndex = path.endsWith('index.html') || path === '/' || path === '';
+                        if(isIndex){
+                            // prevent default navigation and force reload
+                            e.preventDefault();
+                            // navigate (this triggers a reload); if already index, force reload as fallback
+                            window.location.href = 'index.html';
+                            setTimeout(()=> { try { window.location.reload(); } catch(e) {} }, 40);
+                        }
+                        // otherwise default link will navigate to index.html
+                    });
+                })();
+
+        // Mobile drawer: slide-in + overlay using GSAP
+
+        const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('mobile-drawer');
+const overlay = document.getElementById('mobile-overlay');
+const closeBtn = document.getElementById('drawer-close');
+
+let isOpen = false; // track drawer state
+
+function openDrawer() {
+  overlay.style.pointerEvents = "auto";
+  gsap.to(drawer, { x: "0%", duration: 0.5, ease: "power3.out" });
+  gsap.to(overlay, { opacity: 1, duration: 0.5 });
+  hamburger.setAttribute('aria-expanded', 'true');
+  drawer.setAttribute('aria-hidden', 'false');
+  isOpen = true;
+}
+
+function closeDrawer() {
+  overlay.style.pointerEvents = "none";
+  gsap.to(drawer, { x: "100%", duration: 0.5, ease: "power3.in" });
+  gsap.to(overlay, { opacity: 0, duration: 0.5 });
+  hamburger.setAttribute('aria-expanded', 'false');
+  drawer.setAttribute('aria-hidden', 'true');
+  isOpen = false;
+}
+
+// Toggle drawer when hamburger is clicked
+hamburger.addEventListener('click', () => {
+  if (isOpen) {
+    closeDrawer();
+  } else {
+    openDrawer();
+  }
+});
+
+// Close drawer when overlay or close button is clicked
+closeBtn.addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+
+
+
+
+
+
+
+
+        // Parallax Gallery Animation (unchanged behavior)
+        const images = document.querySelectorAll('.gallery-img');
+        images.forEach((img, i) => {
+            const x = (i % 4) * 25 + 10; // layout offsets
+            const y = (i % 3) * 30 + 10; // layout offsets
+            img.style.left = `${x}%`;
+            img.style.top = `${y}%`;
+
+            gsap.to(img, {
+                opacity: 1,
+                scale: 1,
+                rotation: i % 2 === 0 ? 8 : -8,
+                y: -300,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".gallery",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1.5
+                }
+            });
+        });
+
+        // Smooth scroll for nav links (works for drawer links too)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // close mobile drawer first if it's open
+                if (drawer && drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+                e.preventDefault();
+                const target = this.getAttribute('href');
+                if (target && target !== '#') gsap.to(window, { duration: 1.2, scrollTo: target, ease: "power4.inOut" });
+            });
+        });
+
+        // Footer helpers: set current year and handle newsletter form
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        const nlForm = document.getElementById('newsletterForm');
+        if (nlForm) {
+            nlForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail');
+                if (!email || !email.value || !email.checkValidity()) {
+                    email?.focus();
+                    email?.reportValidity();
+                    return;
+                }
+                // fake submit — show success microcopy
+                const submitBtn = nlForm.querySelector('button[type=submit]');
+                const orig = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Sending…';
+                submitBtn.disabled = true;
+                setTimeout(() => {
+                    submitBtn.innerHTML = 'Subscribed ✓';
+                    submitBtn.style.background = 'linear-gradient(90deg,#6ee7b7,#f59e0b)';
+                    email.value = '';
+                    setTimeout(() => { submitBtn.innerHTML = orig; submitBtn.disabled = false; submitBtn.style.background = ''; }, 2400);
+                }, 900);
+            });
+        }
+
+        // reveal footer when scrolling near bottom
+        const footerEl = document.querySelector('.site-footer');
+        if (footerEl) {
+            gsap.from(footerEl, { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: footerEl, start: 'top bottom-=100' } });
+        }
+
+        // Testimonials GSAP carousel
+        (function initTestimonials() {
+            const slidesWrap = document.getElementById('tSlides');
+            const track = document.querySelector('.t-track');
+            if (!slidesWrap) return;
+            const slides = Array.from(slidesWrap.querySelectorAll('.t-slide'));
+            const dotsWrap = document.getElementById('tDots');
+            const prevBtn = document.getElementById('tPrev');
+            const nextBtn = document.getElementById('tNext');
+            let current = 0;
+            let autoplayTimer = null;
+
+            // build dots
+            slides.forEach((s, i) => {
+                const dot = document.createElement('button');
+                dot.className = 't-dot';
+                dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+                dot.addEventListener('click', () => goTo(i));
+                dotsWrap.appendChild(dot);
+            });
+
+            const dots = Array.from(dotsWrap.children);
+
+            function updateActive() {
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                slides.forEach((s, i) => s.setAttribute('aria-hidden', i === current ? 'false' : 'true'));
+            }
+
+            function getTargetX(i) {
+                const slide = slides[i];
+                const slideRect = slide.getBoundingClientRect();
+                const trackRect = track.getBoundingClientRect();
+                // offset so slide centers in the track where possible
+                const centerOffset = (trackRect.width - slideRect.width) / 2;
+                // slide.offsetLeft is relative to slidesWrap
+                return - (slide.offsetLeft - centerOffset);
+            }
+
+            function goTo(i) {
+                current = (i + slides.length) % slides.length;
+                const x = getTargetX(current);
+                gsap.to(slidesWrap, { x: x, duration: 0.6, ease: 'power3.out' });
+                updateActive();
+                resetAutoplay();
+            }
+
+            function prev() { goTo(current - 1); }
+            function next() { goTo(current + 1); }
+
+            prevBtn?.addEventListener('click', prev);
+            nextBtn?.addEventListener('click', next);
+
+            // keyboard support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prev();
+                if (e.key === 'ArrowRight') next();
+            });
+
+            function startAutoplay() {
+                stopAutoplay();
+                autoplayTimer = setInterval(() => next(), 4500);
+            }
+            function stopAutoplay() { if (autoplayTimer) clearInterval(autoplayTimer); autoplayTimer = null; }
+            function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+            // pause on hover/focus
+            const carouselRoot = document.querySelector('.t-carousel');
+            carouselRoot?.addEventListener('mouseenter', () => stopAutoplay());
+            carouselRoot?.addEventListener('mouseleave', () => startAutoplay());
+
+            // initial render
+            goTo(0);
+            startAutoplay();
+
+            // Ensure adjustments after window resize (recenter)
+            let resizeTimer = null;
+            window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => goTo(current), 120); });
+
+            // subtle entrance animation for slides when they first appear
+            gsap.from('.t-slide', { opacity: 0, y: 30, stagger: 0.07, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: '.testimonials', start: 'top 80%' } });
+        })();
+    </script>
+</body>
+
+</html>
