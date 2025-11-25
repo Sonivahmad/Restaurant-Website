@@ -7,6 +7,20 @@
     <title>Food Hub • Premium Veg Restaurant & Pizza Cafe | Meerganj</title>
     <meta name="description"
         content="Best Pure Veg Pizza, Indian & Chinese in Meerganj | Fast Delivery | Premium Experience" />
+    <link rel="preload" href="./images/a1.jpg" as="image">
+    <link rel="preload" href="./images/a2.jpg" as="image">
+    <link rel="preload" href="./images/a3.jpg" as="image">
+    <link rel="preload" href="./images/a4.jpg" as="image">
+    <link rel="preload" href="./images/a5.jpg" as="image">
+
+    <link rel="preload" href="./images/a6.jpg" as="image">
+    <link rel="preload" href="./images/pexels-janetrangdoan-1099680.jpg" as="image">
+
+    <link rel="preload" href="./images/a7.jpg" as="image">
+
+
+    <!-- Repeat for all gallery images -->
+
 
     <!-- Fonts -->
     <link
@@ -1056,23 +1070,16 @@
     <section class="gallery" id="gallery">
         <div class="sticky-container">
             <div class="gallery-images">
-                <img class="gallery-img" src="./images/a1.jpg"
-                    alt="Pizza">
-                <img class="gallery-img" src="./images/a2.jpg"
-                    alt="Indian Food">
-                <img class="gallery-img" src="./images/a3.jpg"
-                    alt="Chinese">
-                <img class="gallery-img" src="./images/a6.jpg"
-                    alt="Restaurant">
-                <img class="gallery-img" src="./images/a5.jpg"
-                    alt="Dining">
-                <img class="gallery-img" src="./images/a7.jpg"
-                    alt="Paneer">
-                <img class="gallery-img" src="./images/pexels-janetrangdoan-1099680.jpg"
-                    alt="Dessert">
+                <img class="gallery-img" src="./images/a1.jpg" alt="Pizza">
+                <img class="gallery-img" src="./images/a2.jpg" alt="Indian Food">
+                <img class="gallery-img" src="./images/a3.jpg" alt="Chinese">
+                <img class="gallery-img" src="./images/a6.jpg" alt="Restaurant">
+                <img class="gallery-img" src="./images/a5.jpg" alt="Dining">
+                <img class="gallery-img" src="./images/a7.jpg" alt="Paneer">
+                <img class="gallery-img" src="./images/pexels-janetrangdoan-1099680.jpg" alt="Dessert">
                 <img class="gallery-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
                     alt="Pizza Closeup">
-                  
+
             </div>
         </div>
     </section>
@@ -1316,66 +1323,66 @@
             .from('.cta-group .btn-cta', { y: -8, opacity: 0, stagger: 0.06 }, '-=0.4');
 
         // small logo micro-bounce (looping) for a modern feel
-                gsap.fromTo('.logo svg', { y: 0, scale: 0.98 }, { y: -3, scale: 1, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.6 });
+        gsap.fromTo('.logo svg', { y: 0, scale: 0.98 }, { y: -3, scale: 1, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.6 });
 
-                // If user clicks logo while already on the index page, force a refresh to reload content.
-                (function(){
-                    const logoEl = document.querySelector('.logo');
-                    if(!logoEl) return;
-                    logoEl.addEventListener('click', (e) => {
-                        // If the current page is index or root, reload instead of just doing nothing
-                        const path = window.location.pathname || '';
-                        const isIndex = path.endsWith('index.html') || path === '/' || path === '';
-                        if(isIndex){
-                            // prevent default navigation and force reload
-                            e.preventDefault();
-                            // navigate (this triggers a reload); if already index, force reload as fallback
-                            window.location.href = 'index.html';
-                            setTimeout(()=> { try { window.location.reload(); } catch(e) {} }, 40);
-                        }
-                        // otherwise default link will navigate to index.html
-                    });
-                })();
+        // If user clicks logo while already on the index page, force a refresh to reload content.
+        (function () {
+            const logoEl = document.querySelector('.logo');
+            if (!logoEl) return;
+            logoEl.addEventListener('click', (e) => {
+                // If the current page is index or root, reload instead of just doing nothing
+                const path = window.location.pathname || '';
+                const isIndex = path.endsWith('index.html') || path === '/' || path === '';
+                if (isIndex) {
+                    // prevent default navigation and force reload
+                    e.preventDefault();
+                    // navigate (this triggers a reload); if already index, force reload as fallback
+                    window.location.href = 'index.html';
+                    setTimeout(() => { try { window.location.reload(); } catch (e) { } }, 40);
+                }
+                // otherwise default link will navigate to index.html
+            });
+        })();
 
         // Mobile drawer: slide-in + overlay using GSAP
 
         const hamburger = document.getElementById('hamburger');
-const drawer = document.getElementById('mobile-drawer');
-const overlay = document.getElementById('mobile-overlay');
-const closeBtn = document.getElementById('drawer-close');
+        const drawer = document.getElementById('mobile-drawer');
+        const overlay = document.getElementById('mobile-overlay');
+        const closeBtn = document.getElementById('drawer-close');
 
-let isOpen = false; // track drawer state
+        let isOpen = false; // track drawer state
 
-function openDrawer() {
-  overlay.style.pointerEvents = "auto";
-  gsap.to(drawer, { x: "0%", duration: 0.5, ease: "power3.out" });
-  gsap.to(overlay, { opacity: 1, duration: 0.5 });
-  hamburger.setAttribute('aria-expanded', 'true');
-  drawer.setAttribute('aria-hidden', 'false');
-  isOpen = true;
-}
+        function openDrawer() {
+            overlay.style.pointerEvents = "auto";
+            gsap.to(drawer, { x: "0%", duration: 0.5, ease: "power3.out" });
+            gsap.to(overlay, { opacity: 1, duration: 0.5 });
+            hamburger.setAttribute('aria-expanded', 'true');
+            drawer.setAttribute('aria-hidden', 'false');
+            isOpen = true;
+        }
 
-function closeDrawer() {
-  overlay.style.pointerEvents = "none";
-  gsap.to(drawer, { x: "100%", duration: 0.5, ease: "power3.in" });
-  gsap.to(overlay, { opacity: 0, duration: 0.5 });
-  hamburger.setAttribute('aria-expanded', 'false');
-  drawer.setAttribute('aria-hidden', 'true');
-  isOpen = false;
-}
+        function closeDrawer() {
+            overlay.style.pointerEvents = "none";
+            gsap.to(drawer, { x: "100%", duration: 0.5, ease: "power3.in" });
+            gsap.to(overlay, { opacity: 0, duration: 0.5 });
+            hamburger.setAttribute('aria-expanded', 'false');
+            drawer.setAttribute('aria-hidden', 'true');
+            isOpen = false;
+        }
 
-// Toggle drawer when hamburger is clicked
-hamburger.addEventListener('click', () => {
-  if (isOpen) {
-    closeDrawer();
-  } else {
-    openDrawer();
-  }
-});
+        // Toggle drawer when hamburger is clicked
+        hamburger.addEventListener('click', () => {
+            if (isOpen) {
+                closeDrawer();
+            } else {
+                openDrawer();
+            }
+        });
 
-// Close drawer when overlay or close button is clicked
-closeBtn.addEventListener('click', closeDrawer);
-overlay.addEventListener('click', closeDrawer);
+        // Close drawer when overlay or close button is clicked
+        closeBtn.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
 
 
 
@@ -1533,6 +1540,29 @@ overlay.addEventListener('click', closeDrawer);
             // subtle entrance animation for slides when they first appear
             gsap.from('.t-slide', { opacity: 0, y: 30, stagger: 0.07, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: '.testimonials', start: 'top 80%' } });
         })();
+
+
+        const galleryImages = [
+            './images/a1.jpg',
+            './images/a2.jpg',
+            './images/a3.jpg',
+            './images/a4.jpg',
+            './images/a5.jpg',
+            './images/a6.jpg',
+            './images/a7.jpg',
+            './images/a8.jpg',
+            './images/a9.jpg',
+            './images/a10.jpg'
+        ];
+
+        // Preload all images
+        galleryImages.forEach(img => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = img;
+            document.head.appendChild(link);
+        });
     </script>
 </body>
 
