@@ -1309,6 +1309,7 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        
 
         // Header scroll effect (smaller / elevated when scrolled)
         const siteHeader = document.querySelector('header');
@@ -1392,27 +1393,78 @@
 
 
         // Parallax Gallery Animation (unchanged behavior)
-        const images = document.querySelectorAll('.gallery-img');
-        images.forEach((img, i) => {
-            const x = (i % 4) * 25 + 10; // layout offsets
-            const y = (i % 3) * 30 + 10; // layout offsets
-            img.style.left = `${x}%`;
-            img.style.top = `${y}%`;
+        
+// ——————— OPTIMIZED PARALLAX GALLERY (No lag even on iPhone 8) ———————
 
-            gsap.to(img, {
-                opacity: 1,
-                scale: 1,
-                rotation: i % 2 === 0 ? 8 : -8,
-                y: -300,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".gallery",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: 1.5
-                }
-            });
-        });
+const gallery = document.querySelector(".gallery");
+const images = document.querySelectorAll(".gallery-img");
+
+// 1. Use will-change + contain for massive GPU boost
+images.forEach(img => {
+  img.style.willChange = "transform, opacity";
+  img.style.contain = "layout style paint"; // Chrome 118+ huge win
+});
+
+// 2. Position images only once (outside RAF)
+images.forEach((img, i) => {
+  const x = (i % 4) * 25 + 5 + gsap.utils.random(-5, 10);
+  const y = (i % 3) * 30 + 10 + gsap.utils.random(-8, 8);
+  const rot = i % 2 === 0 ? gsap.utils.random(4, 12) : gsap.utils.random(-12, -4);
+
+  gsap.set(img, {
+    xPercent: -50,
+    yPercent: -50,
+    rotation: rot,
+    left: `${x}%`,
+    top: `${y}%`,
+  });
+  gsap.set(images, { 
+  opacity: 0, 
+  scale: 0.8,
+  y: 100  // start lower so they rise in beautifully
+});
+});
+
+// 3. Single ScrollTrigger + timeline = way less overhead
+const galleryTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".gallery",
+    start: "top top",
+    end: "+=200%",              // reduced from 300vh → smoother
+    scrub: 0.8,                 // reduced from 1.5 → less GPU
+    pin: ".sticky-container",   // pin explicitly (more reliable)
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
+    // markers: true,           // remove in production
+  }
+});
+
+images.forEach((img, i) => {
+  galleryTl.to(img, {
+    y: -220,           // reduced travel distance
+    opacity: 1,
+    scale: 1,
+    ease: "none",
+  }, i * 0.08);        // slight stagger so they don’t all fight for GPU
+});
+
+// 4. Bonus: Lazy-load + low-quality placeholder (LQIP)
+images.forEach(img => {
+  img.loading = "lazy";
+  
+  // Optional: add blur-up effect (super smooth)
+  img.style.filter = "blur(10px)";
+  img.style.transition = "filter 0.6s ease-out";
+  
+  img.addEventListener("load", () => {
+    img.style.filter = "none";
+  });
+  
+  if (img.complete && img.naturalWidth) {
+    img.style.filter = "none";
+  }
+});
+
 
         // Smooth scroll for nav links (works for drawer links too)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
